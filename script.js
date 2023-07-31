@@ -7,14 +7,11 @@ function handleUpload() {
     const formData = new FormData();
     formData.append("image_file", image);
     formData.append('size', 'auto');
-
-    const apiKey = "kM8mJ15JaA5YX4E8EpHHqcfE";
-
+    const apiKey = "zejMeVNyor1s5F5kEn7weApC";
     // Show the loading icon when the upload button is clicked
     const loadingIcon = document.createElement('div');
     loadingIcon.className = 'loading-icon show';
     document.body.appendChild(loadingIcon);
-
     fetch('https://api.remove.bg/v1.0/removebg', {
         method: 'POST',
         headers: {
@@ -30,18 +27,19 @@ function handleUpload() {
         })
         .then(function (blob) {
             url = URL.createObjectURL(blob);
-
-            // Display the background-removed image
             const img = document.createElement('img');
             img.src = url;
             img.style.display = 'block';
             img.style.margin = "0 auto";
             img.style.border = '1px solid black';
-            img.style.marginBottom = '10px';
-            img.style.marginTop = '10px';
+            img.style.borderSpacing = '10px';
+            img.style.marginBottom = '15px';
+            img.style.marginTop = '20px';
+            img.style.maxHeight = '300px';
+            img.style.maxWidth = '300px';
+            img.style.overflow = 'hidden';
             document.body.appendChild(img);
 
-            // Display the download button below the image
             const downloadButton = document.createElement('button');
             downloadButton.className = 'btn btn-outline-dark';
             downloadButton.innerText = 'Download';
@@ -50,20 +48,16 @@ function handleUpload() {
             downloadButton.onclick = downloadFile;
             document.body.appendChild(downloadButton);
 
-            // Hide the loading icon once the image processing is completed
             loadingIcon.classList.remove('show');
         })
         .catch(function (error) {
             console.error('Error:', error);
-
-            // Hide the loading icon in case of an error as well
             loadingIcon.classList.remove('show');
         });
 
     console.log("clicked");
 }
 
-// The downloadFile function remains unchanged
 function downloadFile() {
     if (!url) {
         console.error('No URL available to download');
